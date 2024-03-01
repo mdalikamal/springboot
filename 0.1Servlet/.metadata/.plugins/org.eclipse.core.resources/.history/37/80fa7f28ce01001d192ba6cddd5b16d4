@@ -1,0 +1,81 @@
+package com.update;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet("/Updat")
+
+public class Updateing extends HttpServlet {
+@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
+	resp.setContentType("text/html");
+	
+	int id = Integer.parseInt(req.getParameter("id"));
+		String Firstname = req.getParameter("Firstname");
+		String Department = req.getParameter("Department");
+		String Surname = req.getParameter("Surname");
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String qry = "update from ali.firstassesment set Firstname=?,Department=?,Surname=? where id=?";
+		try {
+	Class.forName("com.mysql.cj.jdbc.Driver");
+con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ali", "root", "ROOT");
+
+pstmt = con.prepareStatement(qry);
+		
+    rs = pstmt.executeQuery();
+			// PERSISTENCE LOGIC //
+			PrintWriter out = resp.getWriter();
+			if (rs.next()) {
+				pstmt.setString(1,Firstname);
+				pstmt.setString(2, Department);
+				pstmt.setString(3, Surname);
+			    pstmt.setInt(4,id);
+				pstmt.executeQuery();
+				out.println("<html><bossdy bgcolor='green'>" + "<h1>user Details are " + Firstname + "from " + Department+ " Department" + "</h1>" + "</body></html>");
+				// PRESENTATION LOGIC //
+				out.close();
+			} else {
+				out.println("<html><body bgcolor='pink'>" + "<h1>No Data Found!!!!</h1>" + "</body></html>");
+				// PRESENTATION LOGIC //
+				out.close();
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,7 @@
+package com.Pet_clinic_Project.dao;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface PetRepository extends JpaRepository<T, ID> {
+
+}

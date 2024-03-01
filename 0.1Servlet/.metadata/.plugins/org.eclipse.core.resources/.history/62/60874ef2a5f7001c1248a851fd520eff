@@ -1,0 +1,77 @@
+package com.register;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+@WebServlet("/Registe")
+public class Register extends HttpServlet {
+
+	
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+	throws ServletException, IOException {
+
+		response.setContentType("text/html");
+		
+		int id = Integer.parseInt(request.getParameter("id"));
+		String Firstname = request.getParameter("Firstname");
+		String Department = request.getParameter("Department");
+		String Surname = request.getParameter("Surname");
+		System.out.println(id+""+Firstname+""+Department+""+Surname);
+
+		PrintWriter out = response.getWriter();
+		out.println("<html><body bgcolor='yellow'>" + "<h1>Student Details are: " + Firstname + "from " + Department
+				+ " Department" + "</h1>" + "</body></html>");
+
+		out.close();
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		String qry = "insert into Ali.firstassesment values(?,?,?,?)";
+		try {
+			//load drivers
+			Class.forName("com.mysql.jdbc.Driver");
+			//establish the connection
+			con = DriverManager.getConnection("jdbc:mysql:///localhost:8787?user=root&password=ROOT");
+			pstmt = con.prepareStatement(qry);
+            //set  values
+			pstmt.setInt(1, id);
+			pstmt.setString(2, Firstname);
+			pstmt.setString(3, Department);
+			pstmt.setString(4, Surname);
+			pstmt.executeUpdate();
+	out.println("<html><body bgcolor='yellow'>" + "<h1>Student Details are: " + Firstname + "from " + Department
+					+ " Department" + "</h1>" + "</body></html>");
+	    
+			
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+}

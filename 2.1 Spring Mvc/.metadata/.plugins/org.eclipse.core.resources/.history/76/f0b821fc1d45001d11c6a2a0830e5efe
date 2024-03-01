@@ -1,0 +1,119 @@
+package productcrudapp.model;
+
+import java.io.Serializable;
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+
+
+@Entity
+public class Pet implements Serializable {
+	
+	
+	private String Owner_name;
+	@Id
+	@GeneratedValue(generator = "assigned")
+	@Column(name = "Owner_email",unique=true, nullable = false,columnDefinition="VARCHAR(64)")
+	private String Owner_email;
+	private String password;
+	private String date;injuries,gender,injuries_types,street,city,Description_injuries;
+	public String getOwner_name() {
+		return Owner_name;
+	}
+	public void setOwner_name(String owner_name) {
+		Owner_name = owner_name;
+	}
+	public String getOwner_email() {
+		return Owner_email;
+	}
+	public void setOwner_email(String owner_email) {
+		Owner_email = owner_email;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
+	}
+	public String getInjuries() {
+		return injuries;
+	}
+	public void setInjuries(String injuries) {
+		this.injuries = injuries;
+	}
+	public String getGender() {
+		return gender;
+	}
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+	public String getInjuries_types() {
+		return injuries_types;
+	}
+	public void setInjuries_types(String injuries_types) {
+		this.injuries_types = injuries_types;
+	}
+	public String getStreet() {
+		return street;
+	}
+	public void setStreet(String street) {
+		this.street = street;
+	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	public String getDescription_injuries() {
+		return Description_injuries;
+	}
+	public void setDescription_injuries(String description_injuries) {
+		Description_injuries = description_injuries;
+	}
+	public Pet(String owner_name, String owner_email, String password, String date, String injuries, String gender,
+			String injuries_types, String street, String city, String description_injuries) {
+		super();
+		this.Owner_name = owner_name;
+		this.Owner_email = owner_email;
+		this.password = password;
+		this.date = date;
+		this.injuries = injuries;
+		this.gender = gender;
+		this.injuries_types = injuries_types;
+		this.street = street;
+		this.city = city;
+		this.Description_injuries = description_injuries;
+	}
+	@Override
+	public String toString() {
+		return "Pet [Owner_name=" + Owner_name + ", Owner_email=" + Owner_email + ", password=" + password + ", date="
+				+ date + ", injuries=" + injuries + ", gender=" + gender + ", injuries_types=" + injuries_types
+				+ ", street=" + street + ", city=" + city + ", Description_injuries=" + Description_injuries + "]";
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
